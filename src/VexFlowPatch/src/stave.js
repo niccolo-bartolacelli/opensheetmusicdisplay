@@ -636,11 +636,36 @@ export class Stave extends Element {
     const x = this.x;
     let y;
 
+    // CHROMA_PATCH_ID_07:02:25
+    const offsets = {
+      'treble': 0,
+      'bass': -1,
+      'alto': 3,
+      'tenor': -3,
+      'percussion': 0,
+      'soprano': 1,
+      'mezzo-soprano': 2,
+      'baritone-c': -2,
+      'baritone-f': -2,
+      'subbass': 0,
+      'french': -1,
+      'tab': 0
+    };
+
+    let color_index;
+    // END_CHROMA_PATCH_ID_07:02:25
+
     // Render lines
     for (let line = 0; line < num_lines; line++) {
       y = this.getYForLine(line);
 
       this.applyStyle();
+      // CHROMA_PATCH_ID_07:02:25
+      color_index = (line + offsets[this.clef]) % this.options.line_colors.length; // Negative values count back from end of array
+      const __currentLineColor = this.options.shouldColorStaff ? this.options.line_colors[color_index] : this.options.defaultStaffColor;
+      this.applyStyle(this.context, { ...this.getStyle(), strokeStyle: __currentLineColor, fillStyle: __currentLineColor });
+      // END_CHROMA_PATCH_ID_07:02:25
+
       if (this.options.line_config[line].visible) {
         this.context.beginPath();
         this.context.moveTo(x, y);

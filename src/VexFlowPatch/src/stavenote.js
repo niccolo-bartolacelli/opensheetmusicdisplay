@@ -1124,6 +1124,25 @@ export class StaveNote extends StemmableNote {
     const style = { ...stave.getStyle() || {}, ...this.getLedgerLineStyle() || {} };
     this.applyStyle(ctx, style);
 
+    // CHROMA_PATCH_ID_07:02:25
+    const offsets = {
+      'treble': 0,
+      'bass': -1,
+      'alto': 3,
+      'tenor': -3,
+      'percussion': 0,
+      'soprano': 1,
+      'mezzo-soprano': 2,
+      'baritone-c': -2,
+      'baritone-f': -2,
+      'subbass': 0,
+      'french': -1,
+      'tab': 0
+    };
+
+    let color_index;
+    // END_CHROMA_PATCH_ID_07:02:25
+
     // VexFlowPatch: add group for ledger lines
     const ledgerLinesDrawn = highest_line >= 6 || lowest_line <= 0;
     if (ledgerLinesDrawn) {
@@ -1133,6 +1152,13 @@ export class StaveNote extends StemmableNote {
     for (let line = 6; line <= highest_line; ++line) {
       const normal = (non_displaced_x !== null) && (line <= highest_non_displaced_line);
       const displaced = (displaced_x !== null) && (line <= highest_displaced_line);
+
+      // CHROMA_PATCH_ID_07:02:25
+      color_index = (line + offsets[this.clef]) % stave.options.line_colors.length; // Negative values count back from end of array
+      const __currentLineColor = stave.options.shouldColorStaff ? stave.options.line_colors[color_index] : stave.options.defaultStaffColor;
+      this.applyStyle(ctx, { ...style, strokeStyle: __currentLineColor, fillStyle: __currentLineColor });
+      // END_CHROMA_PATCH_ID_07:02:25
+
       drawLedgerLine(stave.getYForNote(line), normal, displaced);
     }
 
@@ -1140,6 +1166,13 @@ export class StaveNote extends StemmableNote {
     for (let line = 0; line >= lowest_line; --line) {
       const normal = (non_displaced_x !== null) && (line >= lowest_non_displaced_line);
       const displaced = (displaced_x !== null) && (line >= lowest_displaced_line);
+
+      // CHROMA_PATCH_ID_07:02:25
+      color_index = (line + offsets[this.clef]) % stave.options.line_colors.length; // Negative values count back from end of array
+      const __currentLineColor = stave.options.shouldColorStaff ? stave.options.line_colors[color_index] : stave.options.defaultStaffColor;
+      this.applyStyle(ctx, { ...style, strokeStyle: __currentLineColor, fillStyle: __currentLineColor });
+      // END_CHROMA_PATCH_ID_07:02:25
+
       drawLedgerLine(stave.getYForNote(line), normal, displaced);
     }
     if (ledgerLinesDrawn) {
