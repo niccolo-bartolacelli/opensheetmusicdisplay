@@ -114,6 +114,24 @@ export class VexFlowMeasure extends GraphicalMeasure {
             space_above_staff_ln: 0,
             space_below_staff_ln: 0
         });
+
+        // CHROMA_PATCH_ID_07:02:25
+        this.stave.options.line_colors = [
+            this.rules.StaffLineColors[3],
+            this.rules.StaffLineColors[1],
+            this.rules.StaffLineColors[6],
+            this.rules.StaffLineColors[4],
+            this.rules.StaffLineColors[2],
+            this.rules.StaffLineColors[0],
+            this.rules.StaffLineColors[5]
+        ];
+
+        this.stave.options.defaultStaffColor = this.rules.DefaultColorMusic;
+        this.stave.options.shouldColorStaff = this.rules.ShouldColorStaff;
+
+        this.stave.options.staffLinesSpacingModifier = this.rules.StaffLinesSpacingModifier;
+        // END_CHROMA_PATCH_ID_07:02:25
+
         if (this.InitiallyActiveClef) {
             (this.stave as any).clef = VexFlowConverter.Clef(this.InitiallyActiveClef).type;
             // Vexflow sets stave.clef to treble by default. It needs this info e.g. for key signature accidentals on new key sig
