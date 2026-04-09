@@ -556,6 +556,19 @@ export class EngravingRules {
     /** Currently only used in audio player */
     public UseInterpolatedTempoForAccelerandoEtc: boolean;
 
+
+    // CHROMA_PATCH_ID_07:02:25
+    public StaffLineColors: string[];
+
+    public ShouldColorNotes: boolean;
+    public ShouldColorStaff: boolean;
+
+    public StaffLinesSpacingModifier: { start: number, step: number, isReverse: boolean, applyToNotes: boolean };
+
+    public CustomBreaks: number[];
+    // END_CHROMA_PATCH_ID_07:02:25
+
+
     constructor() {
         this.loadDefaultValues();
     }
@@ -989,6 +1002,32 @@ export class EngravingRules {
         this.UseInterpolatedTempoForAccelerandoEtc = false; // wait for rit support etc. can also make
         //   player features like syncing more difficult to implement.
         //   Also, the end of an accelerando is usually not marked, so this makes it difficult to find an end timestamp.
+
+
+        // CHROMA_PATCH_ID_07:02:25
+        this.StaffLineColors = [
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000",
+            "#000000"
+        ];
+
+        this.ShouldColorNotes = false;
+        this.ShouldColorStaff = false;
+
+        this.StaffLinesSpacingModifier = {
+            start: 3,
+            step: 0,
+            isReverse: false,
+            applyToNotes: false
+        };
+
+        this.CustomBreaks = [];
+        // END_CHROMA_PATCH_ID_07:02:25
+
 
         // this.populateDictionaries(); // these values aren't used currently
         try {

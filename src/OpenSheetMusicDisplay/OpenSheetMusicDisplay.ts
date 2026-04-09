@@ -681,6 +681,31 @@ export class OpenSheetMusicDisplay {
         if (options.skyBottomLineBatchMinMeasures !== undefined) {
             this.rules.SkyBottomLineBatchMinMeasures = options.skyBottomLineBatchMinMeasures;
         }
+
+        // CHROMA_PATCH_ID_07:02:25
+        if (options.colorStaffLines !== undefined) {
+            if (options.colorStaffLines.length === 7) {
+                this.rules.StaffLineColors = options.colorStaffLines.slice();
+            }
+        }
+
+        if (options.shouldColorNotes !== undefined) {
+            this.rules.ShouldColorNotes = options.shouldColorNotes;
+        }
+
+        if (options.shouldColorStaff !== undefined) {
+            this.rules.ShouldColorStaff = options.shouldColorStaff;
+        }
+
+        if (options.spaceNotesBy) {
+            this.rules.VoiceSpacingAddendVexflow = options.spaceNotesBy;
+            this.rules.VoiceSpacingMultiplierVexflow = 1;
+        }
+
+        if (options.linesSpacingModifier) {
+            this.rules.StaffLinesSpacingModifier = options.linesSpacingModifier;
+        }
+        // END_CHROMA_PATCH_ID_07:02:25
     }
 
     public setColoringMode(options: IOSMDOptions): void {

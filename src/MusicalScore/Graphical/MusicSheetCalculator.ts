@@ -3048,6 +3048,10 @@ export abstract class MusicSheetCalculator {
             }
         }
 
+        // CHROMA_PATCH_ID_07:02:25
+        measure.InitiallyActiveClef = activeClefs[staffIndex];
+        // END_CHROMA_PATCH_ID_07:02:25
+
         return measure;
     }
 

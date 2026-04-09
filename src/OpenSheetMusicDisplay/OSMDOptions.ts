@@ -269,6 +269,18 @@ export interface IOSMDOptions {
      * Defines the minimum number of measures in the entire sheet music where the skyline and bottom-line batch calculation is enabled.
      */
     skyBottomLineBatchMinMeasures?: number;
+
+
+    // CHROMA_PATCH_ID_07:02:25
+    colorStaffLines?: string[];
+
+    shouldColorNotes?: boolean;
+    shouldColorStaff?: boolean;
+
+    spaceNotesBy?: number;
+
+    linesSpacingModifier?: { start: number, step: number, isReverse: boolean, applyToNotes: boolean };
+    // END_CHROMA_PATCH_ID_07:02:25
 }
 
 export enum AlignRestOption {
