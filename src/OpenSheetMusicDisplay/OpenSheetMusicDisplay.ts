@@ -230,6 +230,21 @@ export class OpenSheetMusicDisplay {
         if (!this.graphic) {
             throw new Error("OSMD: load() needs to be called before render()");
         }
+
+        // CHROMA_PATCH_ID_07:02:25
+        const d: HTMLDivElement = document.createElement("div");
+        d.id = "measure-click-rect";
+        d.style.width = "0px";
+        d.style.height = "0px";
+        d.style.border = "2px solid blue";
+        d.style.position = "absolute";
+        d.style.left = "-10px";
+        d.style.top = "-10px";
+        d.style.pointerEvents = "none";
+        d.style.boxShadow = "blue 0px 0px 4px 0px, blue 0px 0px 4px 0px inset";
+        document.body.appendChild(d);
+        // END_CHROMA_PATCH_ID_07:02:25
+
         this.drawer?.clear(); // clear canvas before setting width
         // this.graphic.GetCalculator.clearSystemsAndMeasures(); // maybe?
         // this.graphic.GetCalculator.clearRecreatedObjects();

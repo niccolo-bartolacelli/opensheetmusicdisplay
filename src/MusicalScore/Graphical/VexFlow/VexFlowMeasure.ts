@@ -664,6 +664,40 @@ export class VexFlowMeasure extends GraphicalMeasure {
             measureNode.id = `${this.MeasureNumber}`;
         }
 
+        // CHROMA_PATCH_ID_07:02:25
+        measureNode.style.pointerEvents = "bounding-box";
+        measureNode.style.cursor = "pointer";
+        measureNode.addEventListener("mouseenter", (_) => {
+            const firstRow: SVGPathElement = measureNode.getElementsByTagName("path")[0];
+            const lastRow: SVGPathElement = measureNode.getElementsByTagName("path")[4];
+
+            const x: number = firstRow.getBoundingClientRect().left + window.scrollX;
+            const y: number = firstRow.getBoundingClientRect().top + window.scrollY;
+
+            const width: number = firstRow.getBoundingClientRect().right - firstRow.getBoundingClientRect().left;
+            const height: number = lastRow.getBoundingClientRect().top - firstRow.getBoundingClientRect().top;
+
+            const d: HTMLElement = document.getElementById("measure-click-rect");
+            d.style.left = x.toString() + "px";
+            d.style.top = y.toString() + "px";
+            d.style.width = width.toString() + "px";
+            d.style.height = height.toString() + "px";
+        });
+
+        measureNode.addEventListener("mouseleave", (_) => {
+            const d: HTMLElement = document.getElementById("measure-click-rect");
+            d.style.left = "-10px";
+            d.style.top = "-10px";
+            d.style.width = "0px";
+            d.style.height = "0px";
+        });
+
+        measureNode.addEventListener("click", (_) => {
+            const event: CustomEvent<number> = new CustomEvent("osmd-measure-clicked", { detail: this.MeasureNumber });
+            window.dispatchEvent(event);
+        });
+        // END_CHROMA_PATCH_ID_07:02:25
+
         // Draw stave lines
         this.stave.setContext(ctx).draw();
         // Draw all voices
